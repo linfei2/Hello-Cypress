@@ -13,4 +13,7 @@ export default [
   ...tseslint.configs.recommended,
   pluginCypress.configs.recommended,
   eslintConfigPrettier,
+  {rules: {
+    "@typescript-eslint/no-namespace": "off"
+  }},
 ];

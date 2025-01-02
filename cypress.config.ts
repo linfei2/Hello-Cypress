@@ -6,5 +6,10 @@ export default defineConfig({
   e2e: {
     baseUrl: 'https://magento.softwaretestingboard.com/',
     watchForFileChanges: false,
+    env: {
+      username: 'Lin Fei',
+      email: 'lin.fei@example.com',
+      password: 'qwkBhP&2'
+    }
   },
 })
