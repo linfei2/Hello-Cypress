@@ -24,7 +24,7 @@ class SignInPage {
   }
 
   assertLoginFailed() {
-    cy.get('[data-ui-id="message-error"] > div')
+    cy.get("[data-ui-id='message-error'] > div")
       .should("be.visible")
       .and(
         "have.text",

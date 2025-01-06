@@ -8,11 +8,11 @@ class HomePage {
   }
 
   clickSignInLink() {
-    cy.get('[class="panel header"] .authorization-link a').click();
+    cy.get("[class='panel header'] .authorization-link a").click();
   }
 
   assertUserLoggedIn(username: string) {
-    cy.get('[class="panel header"] .logged-in').should(
+    cy.get("[class='panel header'] .logged-in").should(
       "have.text",
       `Welcome, ${username}!`,
     );
