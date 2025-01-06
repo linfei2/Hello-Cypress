@@ -10,8 +10,8 @@ describe("Sign in verification", () => {
   });
 
   it("Should sign in with valid credentials", () => {
-       signInPage.signIn(Cypress.env("email"), Cypress.env("password"));
-      homePage.assertUserLoggedIn(Cypress.env('username'))
+    signInPage.signIn(Cypress.env("email"), Cypress.env("password"));
+    homePage.assertUserLoggedIn(Cypress.env("username"));
   });
 
   it("Should show input errors and alert on incorrect sign in", () => {
