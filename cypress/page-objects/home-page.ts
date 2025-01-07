@@ -1,21 +1,13 @@
-class HomePage {
+import { BasePage } from "./base-page";
+
+class HomePage extends BasePage {
   navigateTo() {
     cy.visit("/");
   }
 
   verifyPage() {
-    cy.getPageTitle().should("have.text", "Home Page");
-  }
-
-  clickSignInLink() {
-    cy.get("[class='panel header'] .authorization-link a").click();
-  }
-
-  assertUserLoggedIn(username: string) {
-    cy.get("[class='panel header'] .logged-in").should(
-      "have.text",
-      `Welcome, ${username}!`,
-    );
+    this.getPageTitle().should("have.text", "Home Page");
+    cy.get(".block-promo.home-main").should("be.visible");
   }
 }
 

@@ -1,7 +1,9 @@
-class SignInPage {
+import { BasePage } from "./base-page";
+
+class SignInPage extends BasePage {
   verifyPage() {
     cy.url().should("include", "customer/account/login");
-    cy.getPageTitle().should("have.text", "Customer Login");
+    this.getPageTitle().should("have.text", "Customer Login");
   }
 
   signIn(email: string, password: string) {
