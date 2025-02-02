@@ -4,7 +4,9 @@ import { productListingPage } from "../page-objects/product-listing-page";
 
 describe("Add to cart", () => {
   it("Can add to cart from product listing page", () => {
-    const product = "Juno Jacket";
+    const productName = "Juno Jacket";
+    const size = "S";
+    const color = "Blue";
 
     homePage.navigateTo();
     homePage.verifyPage();
@@ -12,20 +14,20 @@ describe("Add to cart", () => {
     cy.wait(500);
     homePage.selectCategoryFromMenu(["Women", "Tops", "Jackets"]);
 
-    productListingPage.getProductByName(product).within(() => {
-      productListingPage.pickSize("S");
-      productListingPage.pickColor("Blue");
+    productListingPage.getProductByName(productName).within(() => {
+      productListingPage.pickSize(size);
+      productListingPage.pickColor(color);
       productListingPage.addToCart();
     });
     productListingPage.assertSuccessMessage(
-      `You added ${product} to your shopping cart`,
+      `You added ${productName} to your shopping cart`,
     );
     productListingPage.assertNumberOfItemsInCart(1);
     productListingPage.goToCart();
 
     cartPage.verifyPage();
     cartPage.assertItemsInCart([
-      { name: "Juno Jacket", price: "$77.00", qty: 1 },
+      { name: productName, size: size, color: color, price: "$77.00", qty: 1 },
     ]);
   });
 });
