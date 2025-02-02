@@ -38,6 +38,7 @@
     ]
   },
   "dependencies": {
+    "@faker-js/faker": "^9.4.0",
     "cypress-real-events": "^1.13.0"
   }
 }

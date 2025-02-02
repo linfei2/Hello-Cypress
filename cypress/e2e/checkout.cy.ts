@@ -1,13 +1,17 @@
 import { cartPage } from "../page-objects/cart-page";
+import { faker } from "@faker-js/faker";
+import { checkoutPage } from "../page-objects/checkout-page";
+import { Product } from "../interfaces/product";
+import { shippingData } from "../interfaces/shipping-data";
 
 describe("Checkout test", () => {
   let form_key: string;
 
-  before("Preset cart content by API", () => {
+  before("Preset cart content via API", () => {
     cy.visit("/");
     cy.waitUntil(() =>
-      cy.getCookie("form_key").then((cookie) => cookie?.value),
-    ).then((cookieValue: string) => {
+      cy.getCookie("form_key").then((cookie) => cookie?.value as string),
+    ).then((cookieValue) => {
       form_key = cookieValue;
     });
 
@@ -28,14 +32,41 @@ describe("Checkout test", () => {
     });
   });
 
-  it("Can proceed to checkout", () => {
-    const productName = "Juno Jacket";
-    const size = "S";
-    const color = "Blue";
+  it("Can proceed to checkout and place an order", () => {
+    const productToOrder: Product = {
+      name: "Juno Jacket",
+      size: "S",
+      color: "Blue",
+      price: "$77.00",
+      qty: 1,
+    };
+    const shippingData: shippingData = {
+      email: faker.internet.email(),
+      firstName: faker.person.firstName(),
+      lastName: faker.person.lastName(),
+      address: faker.location.streetAddress(),
+      city: faker.location.city(),
+      state: faker.location.state(),
+      zip: faker.location.zipCode(),
+      phone: faker.phone.number(),
+    };
+    const shippingMethod = "Best Way";
 
     cartPage.navigateTo();
-    cartPage.assertItemsInCart([
-      { name: productName, size: size, color: color, price: "$77.00", qty: 1 },
-    ]);
+    cartPage.assertItemsInCart([productToOrder]);
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(500);
+    cartPage.proceedToCheckout();
+
+    checkoutPage.completeShippingData(shippingData);
+    checkoutPage.selectShippingMethod(shippingMethod);
+    checkoutPage.clickNext();
+    checkoutPage.setBillingAddressSameAsShipping();
+    checkoutPage.assertBillingAdressDetails(
+      shippingData.firstName,
+      shippingData.lastName,
+    );
+    checkoutPage.placeOrder();
+    checkoutPage.assertOrderSuccess();
   });
 });

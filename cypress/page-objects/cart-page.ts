@@ -27,6 +27,10 @@ class CartPage extends BasePage {
         });
     });
   }
+
+  proceedToCheckout() {
+    cy.get("[data-role='proceed-to-checkout']").click();
+  }
 }
 
 export const cartPage = new CartPage();
