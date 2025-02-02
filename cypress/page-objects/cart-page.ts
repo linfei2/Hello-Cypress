@@ -2,6 +2,10 @@ import { Product } from "../interfaces/product";
 import { BasePage } from "./base-page";
 
 class CartPage extends BasePage {
+  navigateTo() {
+    cy.visit("/checkout/cart/");
+  }
+
   verifyPage() {
     cy.url().should("include", "/checkout/cart/");
     this.getPageTitle().should("have.text", "Shopping Cart");
